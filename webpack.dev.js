@@ -10,6 +10,10 @@ module.exports = {
     mode: 'development',
     devtool: 'source-map',
     stats: 'verbose',
+    output: {
+      path: path.join(__dirname, 'dist'),
+      filename: 'index.bundle.js'
+    },
     module: {
         rules: [
             {
@@ -26,11 +30,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new MiniCssExtractPlugin({ filename:'main.css' }),
-        new HtmlWebPackPlugin({
-            template: "./src/client/views/index.html",
-            filename: "./index.html",
-        }),
         new CleanWebpackPlugin({
             // Simulate the removal of files
             dry: true,
@@ -40,5 +39,11 @@ module.exports = {
             cleanStaleWebpackAssets: true,
             protectWebpackAssets: false,
         }),
+        new HtmlWebPackPlugin({
+            template: "./src/client/views/index.html",
+            filename: "./index.html",
+        }),
+        new MiniCssExtractPlugin({ filename:'main.[contenthash].css' }),
+
     ]
 }
