@@ -1,6 +1,7 @@
 // TODO: Configure the environment variables
 const path = require('path')
 const axios = require('axios')
+var https = require('follow-redirects').https;
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
 const app = express()
@@ -10,20 +11,22 @@ const dotenv = require('dotenv')
 dotenv.config()
 // TODO add Configuration to be able to use env variables
 
-const BASE_API_URL = 'https://api.meaningcloud.com/sentiment-2.1'
-const API_KEY = process.env.API_KEY
+const API_KEY = process.env.APIKEY
 // TODO: Create an instance for the server
 var cors = require('cors')
 app.use(cors())
 // TODO: Configure cors to avoid cors-origin issue
-const Body_Parser = require('body-parser')
+const Body_Parser = require('body-parser');
+const json = require('./mockAPI.js');
 
  
 // create application/json parser
 var jsonParser = Body_Parser.json()
+app.use(jsonParser);
  
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = Body_Parser.urlencoded({ extended: false })
+app.use(urlencodedParser);
 // TODO: Configure express to use body-parser as middle-ware.
 // TODO: Configure express static directory.
 // app.use(express.static('src/client'))
@@ -38,25 +41,37 @@ app.get('/', function (req, res) {
 app.post('/add-url', async (req, res) => {
     try {
         var url = req.body.checkingURL;
-        const API_RESPONSE = await axios.get(
-            `${BASE_API_URL}?key=${API_KEY}&url=${url}&lang=en`
-        )
-        const data = { 
-            text: sentence_list[0].text,
-            score_tag : '',
-            agreement : '',
-            subjectivity : '',
-            confidence : '',
-            irony : ''
-        } = API_RESPONSE.data
-        res.send({
-            text,
-            score_tag,
-            agreement,
-            subjectivity,
-            confidence,
-            irony
-        })
+        var options = {
+            'method': 'POST',
+            'hostname': 'api.meaningcloud.com',
+            'path': `/sentiment-2.1?key=${API_KEY}&lang=en&url=${url}`,
+            'headers': {
+            },
+            'maxRedirects': 20
+          };
+        
+          var request = https.request(options, function (result) {
+            var chunks = [];
+        
+            result.on("data", function (chunk) {
+              chunks.push(chunk);
+            });
+        
+            result.on("end", function (chunk) {
+              var body = Buffer.concat(chunks);
+              console.log(body.toString());
+                res.send({
+                    data : JSON.parse(body.toString())
+                })
+            });
+        
+            result.on("error", function (error) {
+              console.error(error);
+            });
+          });
+        
+          request.end();
+        
         
     } catch (error) {
         console.log(error.message)
