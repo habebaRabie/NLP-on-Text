@@ -5,9 +5,7 @@ const post = async (url = '', data = {}) => {
         method: 'POST',
         credentials: 'same-origin',
         mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
     })
     try {
@@ -17,30 +15,21 @@ const post = async (url = '', data = {}) => {
     }
 }
 
-//var is_url = require('is_url')
+//this function used to get the data from the URL that the user entered and then print it in the front-end
 
 const handleSubmit = async () => {
-    /**
-     * TODO
-     *  - Get Value of the input for URL
-     *  - Check if it's URL or not
-     *      yes
-     *          send it to the backend
-     *      no
-     *          show user message it's not valid URL
-     */
     const checkingURL = document.getElementById('article-url').value;
     if (is_url(checkingURL) == true){
         post("http://localhost:8082/add-url", {
             url: checkingURL
         }).then(data=>{
             console.log(data);
-            // document.getElementById('text').innerHTML = `Text : ${data.text}`;
-            // document.getElementById('agreement').innerHTML = `Agreement : ${data.agreement}`;
-            // document.getElementById('subjectivity').innerHTML = `Subjectivity : ${data.subjectivity}`;
-            // document.getElementById('confidence').innerHTML = `Confidence : ${data.confidence}`;
-            // document.getElementById('irony').innerHTML = `Irony : ${data.irony}`;
-            // document.getElementById('score_tag').innerHTML = `Score_tag : ${data.score_tag}`;
+            document.getElementById('text').innerHTML = `Text : ${data.sentence_list[0].text}`;
+            document.getElementById('agreement').innerHTML = `Agreement : ${data.agreement}`;
+            document.getElementById('subjectivity').innerHTML = `Subjectivity : ${data.subjectivity}`;
+            document.getElementById('confidence').innerHTML = `Confidence : ${data.confidence}`;
+            document.getElementById('irony').innerHTML = `Irony : ${data.irony}`;
+            document.getElementById('score_tag').innerHTML = `Score_tag : ${data.score_tag}`;
         })
     }
     else{

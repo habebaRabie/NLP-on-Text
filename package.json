@@ -10,8 +10,9 @@
   },
   "keywords": [],
   "author": "Habeba_Rabie",
-  "description": "PUT_SMALL_DESCRIPTION_HERE",
+  "description": "We call the meaning cloud API to fetch the data from it according to the URL that the user enters",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -21,7 +22,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
-    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.13.10",
     "@webpack-cli/serve": "^1.3.0",
     "babel-loader": "^8.2.2",
@@ -35,10 +35,17 @@
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "sass-loader": "^10.1.1",
     "style-loader": "^2.0.0",
+    "supertest": "^6.1.3",
     "terser-webpack-plugin": "^1.4.5",
     "webpack": "^5.27.1",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.7.2",
     "workbox-webpack-plugin": "^6.1.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }

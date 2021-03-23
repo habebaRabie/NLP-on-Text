@@ -24,18 +24,14 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    {loader: MiniCssExtractPlugin.loader}, 
-                    'css-loader', 'sass-loader']
+                    {loader: MiniCssExtractPlugin.loader},'css-loader', 'sass-loader']
             }
         ]
     },
     plugins: [
         new CleanWebpackPlugin({
-            // Simulate the removal of files
             dry: true,
-            // Write Logs to Console
             verbose: true,
-            // Automatically remove all unused webpack assets on rebuild
             cleanStaleWebpackAssets: true,
             protectWebpackAssets: false,
         }),
@@ -43,7 +39,9 @@ module.exports = {
             template: "./src/client/views/index.html",
             filename: "./index.html",
         }),
-        new MiniCssExtractPlugin({ filename:'main.[contenthash].css' }),
+        new MiniCssExtractPlugin({ 
+            filename:'main.[contenthash].css' 
+        }),
 
     ]
 }

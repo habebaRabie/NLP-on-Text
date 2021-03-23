@@ -1,15 +1,19 @@
-// TODO: import the url check function
+import is_url from "../js/checkURL"
 
 describe('Test check url functionality', () => {
     test('Testing the checkUrl function defined or not', () => {
-        // TODO: write your logic here
+        expect(is_url).toBeDefined();
+        // expect(typeof is_url).toBe('function');
+        
     })
 
     test('Testing the checkUrl function return false for invalid url', () => {
-        // TODO: write your logic here
+        var validone = "https://en.wikipedia.org/wiki/English_articles";
+        expect(is_url(validone)).toBe(true);
     })
 
     test('Testing the checkUrl function return true for valid url', () => {
-        // TODO: write your logic here
+        var notvalidone = "https:/ en.wikipedia.org/wiki/English_articles";
+        expect(is_url(notvalidone)).toBe(false);
     })
 })
