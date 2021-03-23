@@ -2,9 +2,7 @@ import is_url from "../js/checkURL"
 
 describe('Test check url functionality', () => {
     test('Testing the checkUrl function defined or not', () => {
-        expect(is_url).toBeDefined();
-        // expect(typeof is_url).toBe('function');
-        
+        expect(is_url).toBeDefined();        
     })
 
     test('Testing the checkUrl function return false for invalid url', () => {
